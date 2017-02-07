@@ -1,14 +1,17 @@
 package com.aqif.tweetssearcher.searcher.search.dagger;
 
+import android.support.v7.widget.SearchView;
+
 import com.aqif.tweetssearcher.restapi.twitter.manager.ITwitterApiManager;
-import com.aqif.tweetssearcher.searcher.search.ITweetsSearchViewModel;
-import com.aqif.tweetssearcher.searcher.search.TweetsSearchViewModel;
-import com.aqif.tweetssearcher.searcher.search.observer.ITweetsDataChangeObservable;
-import com.aqif.tweetssearcher.searcher.search.observer.ITweetsDataChangeObserver;
-import com.aqif.tweetssearcher.searcher.search.observer.TweetsDataChangeObservable;
+import com.aqif.tweetssearcher.searcher.search.model.ITweetsSearchModel;
+import com.aqif.tweetssearcher.searcher.search.model.TweetsSearchModel;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.ITweetsSearchViewModel;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.observer.ITweetsSearchViewModelObservable;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.observer.ITweetsSearchViewModelObserver;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.observer.TweetsSearchViewModelObservable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,22 +24,28 @@ import dagger.Provides;
 public class TweetsSearchModule
 {
 
+    private SearchView mSearchView;
 
-    @Provides
-    List<ITweetsDataChangeObserver> provideTweetsDataChangeObserversList()
+    public TweetsSearchModule(SearchView searchView)
     {
-        return new ArrayList<ITweetsDataChangeObserver>();
+        mSearchView = searchView;
     }
 
     @Provides
-    ITweetsDataChangeObservable provideTweetsDataChangeObservable(List<ITweetsDataChangeObserver> tweetsDataChangeObservers)
+    ITweetsSearchModel provideTweetsSearchModel(ITwitterApiManager twitterApiManager)
     {
-        return new TweetsDataChangeObservable(tweetsDataChangeObservers);
+        return new TweetsSearchModel(twitterApiManager);
     }
 
     @Provides
-    ITweetsSearchViewModel provideTweetsSearchViewModel(ITweetsDataChangeObservable tweetsDataChangeObservable, ITwitterApiManager twitterApiManager)
+    ITweetsSearchViewModelObservable provideTweetsSearchViewModelObservable()
     {
-        return new TweetsSearchViewModel(tweetsDataChangeObservable, twitterApiManager);
+        return new TweetsSearchViewModelObservable(new ArrayList<ITweetsSearchViewModelObserver>());
+    }
+
+    @Provides
+    ITweetsSearchViewModel provideTweetsSearchViewModel(ITweetsSearchViewModelObservable tweetsSearchViewModelObservable, ITweetsSearchModel tweetsSearchModel)
+    {
+        return new TweetsSearchViewModel(mSearchView, tweetsSearchViewModelObservable, tweetsSearchModel);
     }
 }

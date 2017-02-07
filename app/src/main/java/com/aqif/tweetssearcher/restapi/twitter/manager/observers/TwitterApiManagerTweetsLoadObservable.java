@@ -1,6 +1,6 @@
 package com.aqif.tweetssearcher.restapi.twitter.manager.observers;
 
-import com.aqif.tweetssearcher.restapi.twitter.searchtweets.responsedao.TweetsSearchDAO;
+import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.TweetsSearchDAO;
 
 import java.util.List;
 

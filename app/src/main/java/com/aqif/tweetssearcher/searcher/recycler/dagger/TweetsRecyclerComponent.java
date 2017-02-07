@@ -1,12 +1,8 @@
 package com.aqif.tweetssearcher.searcher.recycler.dagger;
 
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-
-import com.aqif.tweetssearcher.searcher.activity.TweetsSearchActivity;
+import com.aqif.tweetssearcher.searcher.recycler.viewmodel.ITweetsRecyclerViewModel;
+import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel;
+import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
 
 import dagger.Component;
 
@@ -19,11 +15,8 @@ import dagger.Component;
 public interface TweetsRecyclerComponent
 {
 
-//    TweetsSearchActivity getTweetsSearchActivity();
-//    RecyclerView getTweetsRecyclerView();
-//    SwipeRefreshLayout getSwipeRefreshLayout();
-//    DrawerLayout getDrawerLayout();
-//    Toolbar getToolbar();
-//    NavigationView getNavigationView();
+    void inject(TweetsRecyclerViewModel.InjectableTweetsRecyclerViewModelField field);
+
+    ITweetsRecyclerViewModel getTweetsRecyclerViewModel();
 
 }

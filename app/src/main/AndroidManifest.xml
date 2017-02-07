@@ -13,6 +13,7 @@
         <activity
             android:name=".searcher.activity.TweetsSearchActivity"
             android:label="@string/app_name"
+            android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

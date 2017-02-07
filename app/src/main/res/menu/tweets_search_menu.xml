@@ -5,7 +5,7 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
         android:title="Search"
-        app:actionViewClass="com.aqif.tweets.search.TweetsSearchView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"
 
         />

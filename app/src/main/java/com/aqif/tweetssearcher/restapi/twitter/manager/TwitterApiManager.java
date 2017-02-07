@@ -5,9 +5,9 @@ import com.aqif.tweetssearcher.restapi.twitter.manager.observers.ITwitterApiMana
 import com.aqif.tweetssearcher.restapi.twitter.manager.observers.ITwitterApiManagerTweetsLoadObservable;
 import com.aqif.tweetssearcher.restapi.twitter.oauth.callbackhandler.ITwitterOAuthCallbackObserver;
 import com.aqif.tweetssearcher.restapi.twitter.oauth.requesthandler.ITwitterOAuthRequestHandler;
-import com.aqif.tweetssearcher.restapi.twitter.searchtweets.callbackhandler.ITweetsSearchCallbackObserver;
-import com.aqif.tweetssearcher.restapi.twitter.searchtweets.requesthandler.ITweetsSearchRequestHandler;
-import com.aqif.tweetssearcher.restapi.twitter.searchtweets.responsedao.TweetsSearchDAO;
+import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.callbackhandler.ITweetsSearchCallbackObserver;
+import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.requesthandler.ITweetsSearchRequestHandler;
+import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.TweetsSearchDAO;
 
 import javax.inject.Inject;
 

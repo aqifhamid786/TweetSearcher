@@ -11,10 +11,9 @@ import com.aqif.tweetssearcher.restapi.twitter.manager.observers.ITwitterApiMana
 import com.aqif.tweetssearcher.restapi.twitter.manager.observers.TwitterApiManagerOAuthObservable;
 import com.aqif.tweetssearcher.restapi.twitter.manager.observers.TwitterApiManagerTweetsLoadObservable;
 import com.aqif.tweetssearcher.restapi.twitter.oauth.requesthandler.ITwitterOAuthRequestHandler;
-import com.aqif.tweetssearcher.restapi.twitter.searchtweets.requesthandler.ITweetsSearchRequestHandler;
+import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.requesthandler.ITweetsSearchRequestHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,28 +25,17 @@ import dagger.Provides;
 @Module
 public class TwitterApiManagerModule
 {
+
     @Provides
-    public List<ITwitterApiManagerOAuthObserver> provideTwitterApiManagerOAuthObserverList()
+    public ITwitterApiManagerOAuthObservable provideTwitterApiManagerOAuthObservable()
     {
-        return new ArrayList<>();
+        return new TwitterApiManagerOAuthObservable(new ArrayList<ITwitterApiManagerOAuthObserver>());
     }
 
     @Provides
-    public ITwitterApiManagerOAuthObservable provideTwitterApiManagerOAuthObservable(List<ITwitterApiManagerOAuthObserver> twitterApiManagerOAuthObservers)
+    public ITwitterApiManagerTweetsLoadObservable provideTwitterApiManagerTweetsLoadObservable()
     {
-        return new TwitterApiManagerOAuthObservable(twitterApiManagerOAuthObservers);
-    }
-
-    @Provides
-    public List<ITwitterApiManagerTweetsLoadObserver> provideTwitterApiManagerTweetsLoadObserverList()
-    {
-        return new ArrayList<>();
-    }
-
-    @Provides
-    public ITwitterApiManagerTweetsLoadObservable provideTwitterApiManagerTweetsLoadObservable(List<ITwitterApiManagerTweetsLoadObserver> twitterApiManagerTweetsLoadObservers)
-    {
-        return new TwitterApiManagerTweetsLoadObservable(twitterApiManagerTweetsLoadObservers);
+        return new TwitterApiManagerTweetsLoadObservable(new ArrayList<ITwitterApiManagerTweetsLoadObserver>());
     }
 
     @Provides

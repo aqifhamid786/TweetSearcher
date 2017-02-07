@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
+        <com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView
             android:id="@+id/recycler_view_tweets"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

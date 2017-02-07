@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aqifhamid on 2/9/16.
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public abstract class BaseRecycleRViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
 {
 
-    protected ArrayList<T> mData;
+    protected List<T> mData;
     private AppCompatActivity mContext;
 
     private int mItemLayoutId;

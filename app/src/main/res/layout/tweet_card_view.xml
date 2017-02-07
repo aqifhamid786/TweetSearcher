@@ -51,7 +51,7 @@
                 android:paddingLeft="@dimen/tweet_card_view_text_padding"
                 android:paddingRight="@dimen/tweet_card_view_text_padding"
                 android:layout_below="@+id/tweet_header"
-                android:text="@{tweetModel.tweetText}"/>
+                android:text="@{tweetModel.spannableTweetText}"/>
 
 
             <LinearLayout

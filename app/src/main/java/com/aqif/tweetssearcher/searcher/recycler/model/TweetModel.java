@@ -28,6 +28,7 @@ public class TweetModel
     private String mTweetText;
     private int mReTweetCount;
     private int mFavouritiesCount;
+    private IOnTweetModelSpannableClicked mOnTweetModelSpannableClicked;
 
     private List<Hashtag> hashtags = null;
     private List<UserMention> userMentions = null;
@@ -81,8 +82,13 @@ public class TweetModel
         this.userMentions = userMentions;
     }
 
+    public String getTweetText()
+    {
+        return mTweetText;
+    }
+
     // TODO: Add Factory for spannables.
-    public SpannableString getTweetText()
+    public SpannableString getSpannableTweetText()
     {
 
         SpannableString spanableString = new SpannableString(mTweetText);
@@ -97,13 +103,15 @@ public class TweetModel
 
         for(int lop=0; lop<hashtags.size(); lop++)
         {
-            int startIndex = hashtags.get(lop).getIndices().get(0);
-            int endIndex   = hashtags.get(lop).getIndices().get(1);
-            spanableString.setSpan(new ClickableSpan() {
+            final Hashtag hashtag = hashtags.get(lop);
+            int startIndex = hashtag.getIndices().get(0);
+            int endIndex   = hashtag.getIndices().get(1);
+            spanableString.setSpan(new ClickableSpan()
+            {
                 @Override
                 public void onClick(View view)
                 {
-                    System.out.println("clicked span.");
+                    mOnTweetModelSpannableClicked.onTweetModelSpannableClicked(hashtag.getText());
                 }
             }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -111,6 +119,19 @@ public class TweetModel
 
         return spanableString;
 
+    }
+
+
+    public void setOnTweetModelSpannableClicked(IOnTweetModelSpannableClicked onTweetModelSpannableClicked)
+    {
+        mOnTweetModelSpannableClicked = onTweetModelSpannableClicked;
+    }
+
+    /**** Click listner for spannable *****/
+
+    interface IOnTweetModelSpannableClicked
+    {
+        void onTweetModelSpannableClicked(String tag);
     }
 
 

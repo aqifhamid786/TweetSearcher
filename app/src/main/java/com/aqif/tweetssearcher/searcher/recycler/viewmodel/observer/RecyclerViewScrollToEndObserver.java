@@ -96,7 +96,7 @@ public class RecyclerViewScrollToEndObserver extends RecyclerView.OnScrollListen
         // threshold should reflect how many total columns there are too
         if (!mLoading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
-            if(mOnLoadMoreRecycleViewDataListner!=null)
+            if(mOnLoadMoreRecycleViewDataListner!=null && totalItemCount>2)
             {
                 mOnLoadMoreRecycleViewDataListner.onLoadMoreRecycleViewDataListner(currentPage, totalItemCount, view);
             }

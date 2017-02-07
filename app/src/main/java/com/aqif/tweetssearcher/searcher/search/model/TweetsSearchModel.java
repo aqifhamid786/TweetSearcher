@@ -82,7 +82,7 @@ public class TweetsSearchModel implements
             TweetModel tweetModel = new TweetModel(status.getUser().getName(), "@"+status.getUser().getScreenName(), status.getText(), status.getRetweetCount(), status.getFavoriteCount());
             tweetModel.setHashtags(status.getEntities().getHashtags());
             tweetModel.setUserMentions(status.getEntities().getUserMentions());
-            mTweetModels.add(tweetModel);
+            mTweetModels.add(mTweetModels.size(), tweetModel);
 
             status.getEntities().setUserMentions(null);
             status.getEntities().setHashtags(null);

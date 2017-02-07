@@ -57,6 +57,7 @@ public class TweetsRecyclerViewModel implements
     @Override
     public void onLoadMoreRecycleViewDataListner(int page, int totalItemsCount, RecyclerView view)
     {
+
         mRecyclerViewScrollToEndObserver.setLoadingData(true);
         if(!mIsLastPageLoaded)
         {

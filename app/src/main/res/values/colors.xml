@@ -3,7 +3,7 @@
     <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#1976d2</color>
     <color name="colorAccent">#eeeeee</color>
-
+    <color name="colorProgressBarTint">#1976d2</color>
     <color name="colorRecyclerBg">#f5f8fa</color>
     <color name="tweetsTags">#5baaf4</color>
     <color name="colorSeprator">#eeeeee</color>

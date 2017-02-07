@@ -8,7 +8,9 @@ import com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel.observer.ITweetsS
 
 public interface ITweetsSwipeRefreshViewModel
 {
+    void hideLoader();
     boolean isLoading();
+
     ITweetsSwipeRefreshViewModelObservable getTweetsSwipeRefreshViewModelObservable();
 
 }

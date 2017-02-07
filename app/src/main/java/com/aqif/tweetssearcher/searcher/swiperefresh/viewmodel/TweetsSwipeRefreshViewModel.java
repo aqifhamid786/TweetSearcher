@@ -1,5 +1,6 @@
 package com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel;
 
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.ITweetsRecyclerViewModelObservable;
@@ -26,11 +27,28 @@ public class TweetsSwipeRefreshViewModel implements
         mTweetsSwipeRefreshViewModelObservable = tweetsRecyclerViewModelObservable;
         mSwipeRefreshLayout = swipeRefreshLayout;
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.parseColor("#1976d2"), Color.parseColor("#2196f3"));
     }
 
     @Override
     public ITweetsSwipeRefreshViewModelObservable getTweetsSwipeRefreshViewModelObservable() {
         return mTweetsSwipeRefreshViewModelObservable;
+    }
+
+
+    @Override
+    public void hideLoader()
+    {
+        if(mSwipeRefreshLayout.isRefreshing())
+        {
+
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }, 100);
+        }
     }
 
     @Override

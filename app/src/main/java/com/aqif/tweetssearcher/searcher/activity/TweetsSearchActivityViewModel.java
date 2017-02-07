@@ -162,6 +162,8 @@ public class TweetsSearchActivityViewModel implements
     public void onDataChanged(List<TweetModel> tweetModels, boolean isLastpage)
     {
         mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.setRecyclerViewData(tweetModels, isLastpage);
+        if(mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.isLoading())
+            mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.hideLoader();
     }
 
     /**********  RecyclerViewModel (VM) callbacks *******/
@@ -171,11 +173,11 @@ public class TweetsSearchActivityViewModel implements
     {
         mTweetsSearchViewModelField.tweetsSearchViewModel.loadMoreTweets();
     }
-
+    /**********  SwipeRefreshLayoutViewModel (VM) callbacks *******/
     @Override
     public void onSwipeRefresh()
     {
-        //mTweetsSearchViewModelField.tweetsSearchViewModel.searchTweets("");
+        mTweetsSearchViewModelField.tweetsSearchViewModel.reloadTweets();
     }
 
     /** Injectable Fields Composer

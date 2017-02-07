@@ -81,14 +81,12 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
 
     public void setLoadingMoreItem(boolean loadingMoreItem)
     {
-        if(mLoadingMoreItem == loadingMoreItem)
-            return;
 
         mLoadingMoreItem = loadingMoreItem;
         if(mLoadingMoreItem)
             notifyItemInserted(getItemCount());
         else
-            notifyItemRemoved(getItemCount()+1);
+            notifyItemRemoved(getItemCount());
     }
 
     public void updateData(List<TweetModel> tweetModels)
@@ -103,7 +101,8 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
         for(int lop=0; lop<mTweetModels.size() && lop<tweetModels.size(); lop++)
         {
             mTweetModels.set(lop, tweetModels.get(lop));
-            notifyItemChanged(lop);
+            if(!mTweetModels.get(lop).getTweetText().equals(tweetModels.get(lop).getTweetText()))
+                notifyItemChanged(lop);
         }
 
         while(mTweetModels.size()<tweetModels.size())
@@ -111,6 +110,8 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
             mTweetModels.add(tweetModels.get(mTweetModels.size()));
             notifyItemInserted(mTweetModels.size()-1);
         }
+
+        System.out.println("items size after: "+getItemCount());
 
     }
 }

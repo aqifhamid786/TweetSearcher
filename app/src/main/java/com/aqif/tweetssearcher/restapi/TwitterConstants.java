@@ -12,6 +12,6 @@ public class TwitterConstants
 	public static final String TwitterOAuthBody = "grant_type=client_credentials";
 	public static final String TwitterOAuthBodyContentType = "application/x-www-form-urlencoded;charset=UTF-8";
 	public static final String TwiiterOAuthFailMessage = "Failed to authenticate with Twitter.";
-	public static final int TweetsPerRequestCount = 20;
+	public static final int TweetsPerRequestCount = 10;
 
 }

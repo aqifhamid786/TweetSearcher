@@ -1,6 +1,6 @@
 package com.aqif.tweetssearcher.searcher.search.viewmodel.observer;
 
-import com.aqif.tweetssearcher.searcher.search.Tweet;
+import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface ITweetsSearchViewModelObserver
 {
-    void onDataChanged(List<Tweet> tweets);
+    void onDataChanged(List<TweetModel> tweetModels, boolean isLastPage);
 }

@@ -1,4 +1,4 @@
-package com.aqif.tweetssearcher.searcher.base;
+package com.aqif.tweetssearcher.searcher.recycler.viewmodel.adapter;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView;
 /**
  * Created by aqifhamid on 2/14/16.
  */
-public class BaseViewHolder extends RecyclerView.ViewHolder
+public class TweetViewHolder extends RecyclerView.ViewHolder
 {
 
     private ViewDataBinding mDataBinding;
 
-    public BaseViewHolder(ViewDataBinding dataBindind)
+    public TweetViewHolder(ViewDataBinding dataBindind)
     {
         super(dataBindind.getRoot());
         mDataBinding = dataBindind;

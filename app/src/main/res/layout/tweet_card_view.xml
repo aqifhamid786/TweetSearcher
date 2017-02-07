@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="tweet" type="com.aqif.tweetssearcher.searcher.search.Tweet"/>
+        <variable name="tweetModel" type="com.aqif.tweetssearcher.searcher.recycler.model.TweetModel"/>
     </data>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{tweet.name}"
+                    android:text="@{tweetModel.name}"
                     android:textColor="@android:color/black"
                     android:padding="@dimen/tweet_card_view_text_padding"
                     android:textSize="@dimen/card_view_medium_text_size"
@@ -35,14 +35,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{tweet.userName}"
+                    android:text="@{tweetModel.userName}"
                     android:textColor="@color/tweetsTags"
                     android:paddingTop="@dimen/tweet_card_view_text_padding"
                     android:textSize="@dimen/card_view_medium_text_size"/>
 
             </LinearLayout>
 
-            <TextView
+            <com.aqif.tweetssearcher.searcher.recycler.view.TweetTextView
                 android:id="@+id/textview_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:paddingLeft="@dimen/tweet_card_view_text_padding"
                 android:paddingRight="@dimen/tweet_card_view_text_padding"
                 android:layout_below="@+id/tweet_header"
-                android:text="@{tweet.tweetText}"/>
+                android:text="@{tweetModel.tweetText}"/>
 
 
             <LinearLayout
@@ -72,7 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(tweet.reTweetCount)}"
+                    android:text="@{String.valueOf(tweetModel.reTweetCount)}"
                     android:textColor="@color/colorOfCounts"
                     android:textSize="@dimen/card_view_large_text_size"
                     android:textStyle="bold"/>
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(tweet.favouritiesCount)}"
+                    android:text="@{String.valueOf(tweetModel.favouritiesCount)}"
                     android:textColor="@color/colorOfCounts"
                     android:paddingRight="@dimen/tweet_card_view_text_padding"
                     android:textSize="@dimen/card_view_large_text_size"

@@ -15,11 +15,16 @@ public class TweetsRecyclerView extends RecyclerView
         super(context);
     }
 
-    public TweetsRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public TweetsRecyclerView(Context context, @Nullable AttributeSet attrs)
+    {
         super(context, attrs);
     }
 
-    public TweetsRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public TweetsRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle)
+    {
         super(context, attrs, defStyle);
     }
+
+
+
 }

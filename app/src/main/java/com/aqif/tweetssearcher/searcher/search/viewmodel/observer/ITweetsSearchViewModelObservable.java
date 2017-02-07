@@ -1,6 +1,6 @@
 package com.aqif.tweetssearcher.searcher.search.viewmodel.observer;
 
-import com.aqif.tweetssearcher.searcher.search.Tweet;
+import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ITweetsSearchViewModelObservable
 {
-    void registerTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver twitterApiManagerOAuthObserver);
-    void unregisterTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver twitterApiManagerOAuthObserver);
-    void notifyDataChanged(List<Tweet> tweets);
+    void registerTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver tweetsSearchViewModelObserver);
+    void unregisterTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver tweetsSearchViewModelObserver);
+    void notifyDataChanged(List<TweetModel> tweetModels, boolean isLastPage);
 }

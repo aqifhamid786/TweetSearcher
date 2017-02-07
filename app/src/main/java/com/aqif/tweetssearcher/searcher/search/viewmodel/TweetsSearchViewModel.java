@@ -1,8 +1,10 @@
 package com.aqif.tweetssearcher.searcher.search.viewmodel;
 
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.widget.ProgressBar;
 
-import com.aqif.tweetssearcher.searcher.search.Tweet;
+import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.observer.ITweetsSearchViewModelObservable;
 
 import com.aqif.tweetssearcher.searcher.search.model.ITweetsSearchModel;
@@ -20,18 +22,24 @@ public class TweetsSearchViewModel implements
         ITweetsSearchModel.ITweetsSearchModelListener,
         SearchView.OnQueryTextListener
 {
-
     private SearchView mSearchView;
+    private ProgressBar mProgressBar;
+
     private ITweetsSearchViewModelObservable mTweetsDataChangeObservable;
     private ITweetsSearchModel mTweetsSearchModel;
+
+    private String mCurrentQuery;
 
     @Inject
     public TweetsSearchViewModel(
             SearchView searchView,
+            ProgressBar progressBar,
             ITweetsSearchViewModelObservable tweetsDataChangeObservable,
             ITweetsSearchModel tweetsSearchModel) {
 
         mSearchView = searchView;
+        mProgressBar = progressBar;
+
         mTweetsDataChangeObservable = tweetsDataChangeObservable;
         mTweetsSearchModel = tweetsSearchModel;
         mTweetsSearchModel.setTweetsSearchModelListener(this);
@@ -46,17 +54,28 @@ public class TweetsSearchViewModel implements
     {
         mSearchView.setClickable(true);
         mSearchView.setOnQueryTextListener(this);
+//        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mSearchView.onActionViewCollapsed();
+//                EditText searchField = (EditText)
+//                        mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//                searchField.setText("Haji");
+//            }
+//        });
     }
 
     @Override
-    public void OnTweetsSearchDataUpdated(ArrayList<Tweet> mTweets)
+    public void OnTweetsSearchDataUpdated(ArrayList<TweetModel> mTweetModels, boolean isLastPage)
     {
-        mTweetsDataChangeObservable.notifyDataChanged(mTweets);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mTweetsDataChangeObservable.notifyDataChanged(mTweetModels, isLastPage);
     }
 
     @Override
     public void ShowErrorMessage(String error)
     {
+        mProgressBar.setVisibility(View.INVISIBLE);
         // TODO: Show notification.
     }
 
@@ -69,7 +88,18 @@ public class TweetsSearchViewModel implements
     @Override
     public void searchTweets(String hashtag)
     {
+        mCurrentQuery = hashtag;
+        mTweetsDataChangeObservable.notifyDataChanged(new ArrayList<TweetModel>(), false);
+        mProgressBar.setVisibility(View.VISIBLE);
         mTweetsSearchModel.searchTweets(hashtag);
+    }
+
+    @Override
+    public void reloadTweets()
+    {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mTweetsSearchModel.searchTweets(mCurrentQuery);
+        mTweetsDataChangeObservable.notifyDataChanged(new ArrayList<TweetModel>(), false);
     }
 
     @Override
@@ -83,8 +113,8 @@ public class TweetsSearchViewModel implements
     {
         if(query!=null && query.trim().length()>0)
         {
-//          We do not need # sing in query string to make twiter request
-            searchTweets(query.replace("#", ""));
+//          We do not need # sign in query string to make twiter request
+            searchTweets(query.replace("#", "").replace("@","").replace(" ",""));
         }
         return false;
     }

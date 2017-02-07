@@ -39,7 +39,7 @@ public class TweetsSearchRequestHandler implements ITweetsSearchRequestHandler
         {
             mTweetsSearchCallbackHandler.getSearchCall().cancel();
         }
-        Call<TweetsSearchDAO> call = mTweetsSearchRetrofitService.searchTweets("Bearer "+accessToken, hashtag, TwitterConstants.TweetsPerRequestCount);
+        Call<TweetsSearchDAO> call = mTweetsSearchRetrofitService.searchTweets("Bearer "+accessToken, "#"+hashtag, TwitterConstants.TweetsPerRequestCount);
         mTweetsSearchCallbackHandler.setSearchCall(call);
         call.enqueue(mTweetsSearchCallbackHandler);
     }
@@ -52,7 +52,7 @@ public class TweetsSearchRequestHandler implements ITweetsSearchRequestHandler
             mTweetsSearchCallbackHandler.getSearchCall().cancel();
         }
 
-        Call<TweetsSearchDAO> call = mTweetsSearchRetrofitService.loadMoreTweets("Bearer "+accessToken, hashtag, maxId,TwitterConstants.TweetsPerRequestCount);
+        Call<TweetsSearchDAO> call = mTweetsSearchRetrofitService.loadMoreTweets("Bearer "+accessToken, "#"+hashtag, maxId,TwitterConstants.TweetsPerRequestCount);
         mTweetsSearchCallbackHandler.setSearchCall(call);
         call.enqueue(mTweetsSearchCallbackHandler);
     }

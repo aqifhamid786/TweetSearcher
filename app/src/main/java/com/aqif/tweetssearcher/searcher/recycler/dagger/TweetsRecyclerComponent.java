@@ -2,6 +2,7 @@ package com.aqif.tweetssearcher.searcher.recycler.dagger;
 
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.ITweetsRecyclerViewModel;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel;
+import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.ITweetsRecyclerViewModelObservable;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
 
 import dagger.Component;
@@ -14,9 +15,8 @@ import dagger.Component;
 @Component(modules = {TweetsRecyclerModule.class})
 public interface TweetsRecyclerComponent
 {
-
     void inject(TweetsRecyclerViewModel.InjectableTweetsRecyclerViewModelField field);
 
+    ITweetsRecyclerViewModelObservable getTweetsRecyclerViewModelObservable();
     ITweetsRecyclerViewModel getTweetsRecyclerViewModel();
-
 }

@@ -10,6 +10,7 @@ public interface ITweetsSearchViewModel
 {
     ITweetsSearchViewModelObservable getTweetsSearchViewModelObservable();
     void searchTweets(String hashtag);
+    void reloadTweets();
     void loadMoreTweets();
 
 }

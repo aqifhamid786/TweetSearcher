@@ -96,13 +96,16 @@ public class TwitterApiManager implements ITwitterApiManager
     {
         if(mCurrentSearchResults!=null)
         {
-            mNextPageMaxId = mNextPageIdExtractor.extract(mCurrentSearchResults.getSearchMetadata().getNextResults());
-            mTweetsSearchRequestHandler.loadMoreTweets(mAccessToken, mCurrentSearchResults.getSearchMetadata().getQuery(), mNextPageMaxId);
-            return true;
+            String maxId = mNextPageIdExtractor.extract(mCurrentSearchResults.getSearchMetadata().getNextResults());
+            if(maxId!=null)
+            {
+                mNextPageMaxId = maxId;
+                mTweetsSearchRequestHandler.loadMoreTweets(mAccessToken, mCurrentSearchResults.getSearchMetadata().getQuery(), mNextPageMaxId);
+                return true;
+            }
         }
         return false;
     }
-
 
     /******** Twitter OAuth  Callbacks *******/
     @Override
@@ -126,7 +129,7 @@ public class TwitterApiManager implements ITwitterApiManager
     public void onTweetsSearchSuccess(TweetsSearchDAO responseData)
     {
         mCurrentSearchResults = responseData;
-        mTwitterApiManagerTweetsLoadObservable.notifyTweetsLoadSuccess(responseData, mNextPageMaxId!=null);
+        mTwitterApiManagerTweetsLoadObservable.notifyTweetsLoadSuccess(responseData, mNextPageMaxId==null);
     }
 
     @Override

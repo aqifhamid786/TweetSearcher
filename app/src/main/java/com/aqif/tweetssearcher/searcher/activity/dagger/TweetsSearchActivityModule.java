@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ProgressBar;
 
 import com.aqif.tweetssearcher.R;
 import com.aqif.tweetssearcher.searcher.activity.ITweetsSearchActivityViewModel;
@@ -16,6 +17,7 @@ import com.aqif.tweetssearcher.searcher.activity.observer.TweetsSearchActivityOb
 import com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
+import com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel.TweetsSwipeRefreshViewModel;
 
 import java.util.ArrayList;
 
@@ -73,6 +75,12 @@ public class TweetsSearchActivityModule
     }
 
     @Provides
+    ProgressBar provideProgressBar()
+    {
+        return (ProgressBar) mActivity.findViewById(R.id.loading_progress);
+    }
+
+    @Provides
     ITweetsSearchActivityObservable provideTweetsSearchActivityObservable()
     {
         return new TweetsSearchActivityObservable(new ArrayList<ITweetsSearchActivityObserver>());
@@ -84,7 +92,8 @@ public class TweetsSearchActivityModule
         return new TweetsSearchActivityViewModel(
                 new TweetsSearchActivityViewModel.InjectableActivityFields(),
                 new TweetsRecyclerViewModel.InjectableTweetsRecyclerViewModelField(),
-                new TweetsSearchViewModel.InjectableTweetsSearchViewModelField());
+                new TweetsSearchViewModel.InjectableTweetsSearchViewModelField(),
+                new TweetsSwipeRefreshViewModel.InjectableTweetsSwipeRefreshLayoutViewModelField());
     }
 
 

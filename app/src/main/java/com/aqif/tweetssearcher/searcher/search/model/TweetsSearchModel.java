@@ -5,7 +5,7 @@ import com.aqif.tweetssearcher.restapi.twitter.manager.observers.ITwitterApiMana
 import com.aqif.tweetssearcher.restapi.twitter.manager.observers.ITwitterApiManagerTweetsLoadObserver;
 import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.Status;
 import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.TweetsSearchDAO;
-import com.aqif.tweetssearcher.searcher.search.Tweet;
+import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class TweetsSearchModel implements
     private ITweetsSearchModelListener mTweetsSearchModelListener;
 
     private boolean isReadyToFetchTweets;
-    private ArrayList<Tweet> mTweets;
+    private ArrayList<TweetModel> mTweetModels;
 
     @Inject
     public TweetsSearchModel(ITwitterApiManager twitterApiManager)
@@ -37,7 +37,7 @@ public class TweetsSearchModel implements
         mTwitterApiManager.getTwitterApiManagerTweetsLoadObservable().registerTwitterApiManagerTweetsLoadObserver(this);
         mTwitterApiManager.performOAuth();
 
-        mTweets = new ArrayList<>();
+        mTweetModels = new ArrayList<>();
 
     }
 
@@ -70,20 +70,27 @@ public class TweetsSearchModel implements
     @Override
     public void onTweetsLoadSuccess(TweetsSearchDAO data, boolean isFirstPageData)
     {
+
         if(isFirstPageData)
         {
-            mTweets.clear();
+            mTweetModels.clear();
         }
 
         for(int lop=0; lop<data.getStatuses().size(); lop++)
         {
             Status status = data.getStatuses().get(lop);
-            mTweets.add(new Tweet(status.getUser().getName(), "@"+status.getUser().getScreenName(), status.getText(), status.getRetweetCount(), status.getFavoriteCount()));
+            TweetModel tweetModel = new TweetModel(status.getUser().getName(), "@"+status.getUser().getScreenName(), status.getText(), status.getRetweetCount(), status.getFavoriteCount());
+            tweetModel.setHashtags(status.getEntities().getHashtags());
+            tweetModel.setUserMentions(status.getEntities().getUserMentions());
+            mTweetModels.add(tweetModel);
+
+            status.getEntities().setUserMentions(null);
+            status.getEntities().setHashtags(null);
         }
 
         if(mTweetsSearchModelListener!=null)
         {
-            mTweetsSearchModelListener.OnTweetsSearchDataUpdated(mTweets);
+            mTweetsSearchModelListener.OnTweetsSearchDataUpdated(mTweetModels, data.getSearchMetadata().getNextResults()==null);
         }
 
     }

@@ -1,6 +1,6 @@
 package com.aqif.tweetssearcher.searcher.search.viewmodel.observer;
 
-import com.aqif.tweetssearcher.searcher.search.Tweet;
+import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 
 import java.util.List;
 
@@ -41,11 +41,11 @@ public class TweetsSearchViewModelObservable implements ITweetsSearchViewModelOb
     }
 
     @Override
-    public void notifyDataChanged(List<Tweet> tweets)
+    public void notifyDataChanged(List<TweetModel> tweetModels, boolean isLastPage)
     {
         for(int lop=0; lop<mTweetsSearchViewModelObservers.size(); lop++)
         {
-            mTweetsSearchViewModelObservers.get(lop).onDataChanged(tweets);
+            mTweetsSearchViewModelObservers.get(lop).onDataChanged(tweetModels, isLastPage);
         }
 
     }

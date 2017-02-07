@@ -43,7 +43,6 @@ public class TweetsSearchActivity extends AppCompatActivity implements Navigatio
 
     }
 
-
     @Override
     protected void onDestroy()
     {

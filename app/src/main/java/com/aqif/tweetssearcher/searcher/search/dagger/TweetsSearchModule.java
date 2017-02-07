@@ -1,6 +1,7 @@
 package com.aqif.tweetssearcher.searcher.search.dagger;
 
 import android.support.v7.widget.SearchView;
+import android.widget.ProgressBar;
 
 import com.aqif.tweetssearcher.restapi.twitter.manager.ITwitterApiManager;
 import com.aqif.tweetssearcher.searcher.search.model.ITweetsSearchModel;
@@ -25,10 +26,12 @@ public class TweetsSearchModule
 {
 
     private SearchView mSearchView;
+    private ProgressBar mProgressBar;
 
-    public TweetsSearchModule(SearchView searchView)
+    public TweetsSearchModule(SearchView searchView, ProgressBar progressBar)
     {
         mSearchView = searchView;
+        mProgressBar = progressBar;
     }
 
     @Provides
@@ -46,6 +49,6 @@ public class TweetsSearchModule
     @Provides
     ITweetsSearchViewModel provideTweetsSearchViewModel(ITweetsSearchViewModelObservable tweetsSearchViewModelObservable, ITweetsSearchModel tweetsSearchModel)
     {
-        return new TweetsSearchViewModel(mSearchView, tweetsSearchViewModelObservable, tweetsSearchModel);
+        return new TweetsSearchViewModel(mSearchView, mProgressBar, tweetsSearchViewModelObservable, tweetsSearchModel);
     }
 }

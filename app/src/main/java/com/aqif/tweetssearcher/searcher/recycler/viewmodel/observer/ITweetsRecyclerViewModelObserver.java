@@ -7,4 +7,5 @@ package com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer;
 public interface ITweetsRecyclerViewModelObserver
 {
     void loadMoreTweetsData();
+    void loadTweets(String hashtag);
 }

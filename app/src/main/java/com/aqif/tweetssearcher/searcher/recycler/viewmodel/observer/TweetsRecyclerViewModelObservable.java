@@ -45,7 +45,15 @@ public class TweetsRecyclerViewModelObservable implements ITweetsRecyclerViewMod
         {
             mTweetsRecyclerViewModelObservers.get(lop).loadMoreTweetsData();
         }
+    }
 
+    @Override
+    public void notifyLoadTweets(String hashtag)
+    {
+        for(int lop=0; lop<mTweetsRecyclerViewModelObservers.size(); lop++)
+        {
+            mTweetsRecyclerViewModelObservers.get(lop).loadTweets(hashtag);
+        }
     }
 
 

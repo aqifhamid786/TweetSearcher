@@ -173,6 +173,13 @@ public class TweetsSearchActivityViewModel implements
     {
         mTweetsSearchViewModelField.tweetsSearchViewModel.loadMoreTweets();
     }
+
+    @Override
+    public void loadTweets(String hashtag)
+    {
+        mTweetsSearchViewModelField.tweetsSearchViewModel.searchTweets(hashtag);
+    }
+
     /**********  SwipeRefreshLayoutViewModel (VM) callbacks *******/
     @Override
     public void onSwipeRefresh()

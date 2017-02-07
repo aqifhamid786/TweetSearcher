@@ -24,6 +24,7 @@ public class TweetsSearchViewModel implements
         SearchView.OnQueryTextListener
 {
     private SearchView mSearchView;
+    private final EditText mSearchViewEditText;
     private ProgressBar mProgressBar;
 
     private ITweetsSearchViewModelObservable mTweetsDataChangeObservable;
@@ -46,6 +47,7 @@ public class TweetsSearchViewModel implements
         mTweetsSearchModel = tweetsSearchModel;
         mTweetsSearchModel.setTweetsSearchModelListener(this);
         mSearchView.setOnQueryTextListener(this);
+        mSearchViewEditText = (EditText)mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
         mSearchView.setQueryHint("Search #HashTag");
 
@@ -85,8 +87,13 @@ public class TweetsSearchViewModel implements
     @Override
     public void searchTweets(String hashtag)
     {
-        System.out.println("Search Tweet: "+hashtag);
         mCurrentQuery = hashtag;
+
+        if(!mSearchViewEditText.getText().toString().trim().equals(mCurrentQuery.trim()))
+        {
+            mSearchViewEditText.setText(mCurrentQuery.trim());
+        }
+
         mTweetsDataChangeObservable.notifyDataChanged(new ArrayList<TweetModel>(), false);
         mProgressBar.setVisibility(View.VISIBLE);
         mTweetsSearchModel.searchTweets(hashtag);

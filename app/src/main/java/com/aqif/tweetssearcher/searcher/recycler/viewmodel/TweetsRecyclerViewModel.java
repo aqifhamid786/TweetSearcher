@@ -7,6 +7,7 @@ import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.ITweetsRecyc
 import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.RecyclerViewScrollToEndObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +18,8 @@ import javax.inject.Inject;
 
 public class TweetsRecyclerViewModel implements
         ITweetsRecyclerViewModel,
-        RecyclerViewScrollToEndObserver.IOnLoadMoreRecycleViewDataListner
+        RecyclerViewScrollToEndObserver.IOnLoadMoreRecycleViewDataListner,
+        TweetModel.IOnTweetModelSpannableClicked
 {
 
     private RecyclerView mRecyclerView;
@@ -25,7 +27,8 @@ public class TweetsRecyclerViewModel implements
     private RecyclerViewScrollToEndObserver mRecyclerViewScrollToEndObserver;
     private ITweetsRecyclerViewModelObservable mTweetsRecyclerViewModelObservable;
 
-    boolean mIsLastPageLoaded;
+    private boolean mIsLastPageLoaded;
+    private List<TweetModel> mTweetsData;
 
     @Inject
     public TweetsRecyclerViewModel(RecyclerView recyclerView,
@@ -48,10 +51,27 @@ public class TweetsRecyclerViewModel implements
     @Override
     public void setRecyclerViewData(List<TweetModel> data, boolean isLastPage)
     {
+        updateTweetsListner(data);
         mIsLastPageLoaded = isLastPage;
         mRecyclerViewAdapter.setLoadingMoreItem(false);
         mRecyclerViewAdapter.updateData(data);
         mRecyclerViewScrollToEndObserver.setLoadingData(mIsLastPageLoaded);
+    }
+
+    private void updateTweetsListner(List<TweetModel> data)
+    {
+        if(mTweetsData!=null)
+        {
+            for(int lop=0; lop<mTweetsData.size(); lop++)
+            {
+                mTweetsData.get(lop).setOnTweetModelSpannableClicked(null);
+            }
+        }
+        mTweetsData = data;
+        for(int lop=0; lop<mTweetsData.size(); lop++)
+        {
+            mTweetsData.get(lop).setOnTweetModelSpannableClicked(this);
+        }
     }
 
     @Override
@@ -77,6 +97,12 @@ public class TweetsRecyclerViewModel implements
     public ITweetsRecyclerViewModelObservable getTweetsRecyclerViewModelObserver()
     {
         return mTweetsRecyclerViewModelObservable;
+    }
+
+    @Override
+    public void onTweetModelSpannableClicked(String hashtag)
+    {
+        mTweetsRecyclerViewModelObservable.notifyLoadTweets(hashtag);
     }
 
     /** Injectable Fields Composer

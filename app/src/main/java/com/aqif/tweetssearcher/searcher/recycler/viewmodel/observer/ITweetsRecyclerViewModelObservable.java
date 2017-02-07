@@ -10,6 +10,7 @@ public interface ITweetsRecyclerViewModelObservable
     void unregisterRecyclerViewModelObserver(ITweetsRecyclerViewModelObserver recyclerViewModelObserver);
 
     void notifyLoadMoreTweetsData();
+    void notifyLoadTweets(String hashtag);
 
 
 }

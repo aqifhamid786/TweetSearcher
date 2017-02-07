@@ -129,7 +129,7 @@ public class TweetModel
 
     /**** Click listner for spannable *****/
 
-    interface IOnTweetModelSpannableClicked
+    public interface IOnTweetModelSpannableClicked
     {
         void onTweetModelSpannableClicked(String tag);
     }

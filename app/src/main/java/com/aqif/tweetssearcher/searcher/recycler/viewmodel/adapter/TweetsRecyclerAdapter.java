@@ -25,8 +25,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
     private List<TweetModel> mTweetModels;
     private AppCompatActivity mContext;
 
-    private int mItemLayoutId;
-    private int mItemVariableId;
 
     private boolean mLoadingMoreItem;
 
@@ -110,8 +108,6 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
             mTweetModels.add(tweetModels.get(mTweetModels.size()));
             notifyItemInserted(mTweetModels.size()-1);
         }
-
-        System.out.println("items size after: "+getItemCount());
 
     }
 }

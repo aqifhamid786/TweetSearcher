@@ -4,14 +4,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
 
 import com.aqif.tweetssearcher.searcher.activity.ITweetsSearchActivityViewModel;
 import com.aqif.tweetssearcher.searcher.activity.TweetsSearchActivity;
 import com.aqif.tweetssearcher.searcher.activity.TweetsSearchActivityViewModel;
-import com.aqif.tweetssearcher.searcher.activity.observer.ITweetsSearchActivityObservable;
 import com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView;
 
 import dagger.Component;
@@ -36,7 +34,6 @@ public interface TweetsSearchActivityComponent
     ProgressBar getProgressBar();
     NavigationView getNavigationView();
 
-    ITweetsSearchActivityObservable getTweetsSearchActivityObservable();
     ITweetsSearchActivityViewModel getTweetsSearchActivityViewModel();
 
 }

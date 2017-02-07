@@ -13,6 +13,7 @@ import java.util.List;
 public interface ITweetsRecyclerViewModel
 {
     void setRecyclerViewData(List<TweetModel> data, boolean isLastPage);
+    void onLoadDataFailed();
     ITweetsRecyclerViewModelObservable getTweetsRecyclerViewModelObserver();
 
 }

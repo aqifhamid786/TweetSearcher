@@ -50,5 +50,25 @@ public class TweetsSearchViewModelObservable implements ITweetsSearchViewModelOb
 
     }
 
+    @Override
+    public void notifyClearData()
+    {
+        for(int lop=0; lop<mTweetsSearchViewModelObservers.size(); lop++)
+        {
+            mTweetsSearchViewModelObservers.get(lop).onClearData();
+        }
+
+    }
+
+    @Override
+    public void notifyFailure()
+    {
+        for(int lop=0; lop<mTweetsSearchViewModelObservers.size(); lop++)
+        {
+            mTweetsSearchViewModelObservers.get(lop).onFailure();
+        }
+
+    }
+
 
 }

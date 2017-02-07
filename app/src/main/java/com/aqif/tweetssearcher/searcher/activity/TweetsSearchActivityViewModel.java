@@ -1,5 +1,7 @@
 package com.aqif.tweetssearcher.searcher.activity;
 
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -7,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
+
 import android.widget.ProgressBar;
 
 import com.aqif.tweetssearcher.R;
@@ -26,17 +28,18 @@ import com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel.InjectableTweetsRecyclerViewModelField;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.ITweetsRecyclerViewModelObserver;
 import com.aqif.tweetssearcher.searcher.recycler.model.TweetModel;
+import com.aqif.tweetssearcher.searcher.refresh.dagger.DaggerTweetsRefreshLayoutComponent;
+import com.aqif.tweetssearcher.searcher.refresh.dagger.TweetsRefreshLayoutComponent;
+import com.aqif.tweetssearcher.searcher.refresh.viewmodel.TweetsRefreshViewModel.InjectableTweetsRefreshLayoutViewModelField;
+import com.aqif.tweetssearcher.searcher.refresh.viewmodel.observer.ITweetsRefreshViewModelObserver;
 import com.aqif.tweetssearcher.searcher.search.dagger.DaggerTweetsSearchComponent;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel.InjectableTweetsSearchViewModelField;
 import com.aqif.tweetssearcher.searcher.search.dagger.TweetsSearchComponent;
 import com.aqif.tweetssearcher.searcher.search.dagger.TweetsSearchModule;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.observer.ITweetsSearchViewModelObserver;
-import com.aqif.tweetssearcher.searcher.swiperefresh.dagger.DaggerTweetsSwipeRefreshLayoutComponent;
-import com.aqif.tweetssearcher.searcher.swiperefresh.dagger.TweetsSwipeRefreshLayoutComponent;
-import com.aqif.tweetssearcher.searcher.swiperefresh.dagger.TweetsSwipeRefreshLayoutModule;
-import com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel.TweetsSwipeRefreshViewModel.InjectableTweetsSwipeRefreshLayoutViewModelField;
-import com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel.observer.ITweetsSwipeRefreshViewModelObserver;
+import com.aqif.tweetssearcher.searcher.refresh.dagger.TweetsRefreshLayoutModule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,7 +52,7 @@ public class TweetsSearchActivityViewModel implements
         ITweetsSearchActivityViewModel,
         ITweetsSearchViewModelObserver,
         ITweetsRecyclerViewModelObserver,
-        ITweetsSwipeRefreshViewModelObserver
+        ITweetsRefreshViewModelObserver
 {
 
 
@@ -57,17 +60,17 @@ public class TweetsSearchActivityViewModel implements
     private InjectableActivityFields mActivityFields;
     private InjectableTweetsRecyclerViewModelField mTweetsRecyclerViewModelField;
     private InjectableTweetsSearchViewModelField mTweetsSearchViewModelField;
-    private InjectableTweetsSwipeRefreshLayoutViewModelField mTweetsSwipeRefreshLayoutViewModelField;
+    private InjectableTweetsRefreshLayoutViewModelField mTweetsRefreshLayoutViewModelField;
 
     public TweetsSearchActivityViewModel(InjectableActivityFields activityFields,
                                          InjectableTweetsRecyclerViewModelField tweetsRecyclerViewModelField,
                                          InjectableTweetsSearchViewModelField tweetsSearchViewModelField,
-                                         InjectableTweetsSwipeRefreshLayoutViewModelField tweetsSwipeRefreshLayoutViewModelField)
+                                         InjectableTweetsRefreshLayoutViewModelField tweetsRefreshLayoutViewModelField)
     {
         mActivityFields = activityFields;
         mTweetsRecyclerViewModelField = tweetsRecyclerViewModelField;
         mTweetsSearchViewModelField = tweetsSearchViewModelField;
-        mTweetsSwipeRefreshLayoutViewModelField = tweetsSwipeRefreshLayoutViewModelField;
+        mTweetsRefreshLayoutViewModelField = tweetsRefreshLayoutViewModelField;
     }
 
 
@@ -91,21 +94,47 @@ public class TweetsSearchActivityViewModel implements
         mActivityFields.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        TweetsSwipeRefreshLayoutComponent tweetsSwipeRefreshLayoutComponent = DaggerTweetsSwipeRefreshLayoutComponent.builder()
-                .tweetsSwipeRefreshLayoutModule(new TweetsSwipeRefreshLayoutModule(mActivityFields.swipeRefreshLayout))
+        TweetsRefreshLayoutComponent tweetsRefreshLayoutComponent = DaggerTweetsRefreshLayoutComponent.builder()
+                .tweetsRefreshLayoutModule(new TweetsRefreshLayoutModule(mActivityFields.swipeRefreshLayout, mActivityFields.navigationView))
                 .build();
-        tweetsSwipeRefreshLayoutComponent.inject(mTweetsSwipeRefreshLayoutViewModelField);
-        mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.getTweetsSwipeRefreshViewModelObservable().registerTweetsSwipeRefreshViewModelObserver(this);
-
-
+        tweetsRefreshLayoutComponent.inject(mTweetsRefreshLayoutViewModelField);
+        mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.getTweetsRefreshViewModelObservable().registerTweetsRefreshViewModelObserver(this);
 
         TweetsRecyclerComponent tweetsRecyclerComponent = DaggerTweetsRecyclerComponent.builder()
                 .tweetsRecyclerModule(new TweetsRecyclerModule(mActivityFields.activity, mActivityFields.tweetsRecyclerView))
                 .build();
         tweetsRecyclerComponent.inject(mTweetsRecyclerViewModelField);
         mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.getTweetsRecyclerViewModelObserver().registerRecyclerViewModelObserver(this);
+    }
 
+    @Override
+    public void onActivityStartCalled()
+    {
 
+    }
+
+    @Override
+    public void onActivityResumeCalled()
+    {
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel!=null)
+        {
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.onActivityResumeCalled();
+        }
+    }
+
+    @Override
+    public void onActivityPauseCalled()
+    {
+
+    }
+
+    @Override
+    public void onActiviyStopCalled()
+    {
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel!=null)
+        {
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.onActiviyStopCalled();
+        }
     }
 
     @Override
@@ -133,9 +162,10 @@ public class TweetsSearchActivityViewModel implements
     @Override
     public void onActivityDestroyCalled()
     {
-        if(mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel!=null)
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel!=null)
         {
-            mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.getTweetsSwipeRefreshViewModelObservable().unregisterTweetsSwipeRefreshViewModelObserver(this);
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.getTweetsRefreshViewModelObservable().unregisterTweetsRefreshViewModelObserver(this);
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.onActiviyDestroyCalled();
         }
 
         if(mTweetsSearchViewModelField.tweetsSearchViewModel!=null)
@@ -150,9 +180,15 @@ public class TweetsSearchActivityViewModel implements
     }
 
     @Override
-    public void onBackPressed()
+    public boolean onBackPressed()
     {
-
+        DrawerLayout drawer = mActivityFields.drawerLayout;
+        if (drawer!=null && drawer.isDrawerOpen(GravityCompat.START))
+        {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        return false;
     }
 
 
@@ -162,8 +198,24 @@ public class TweetsSearchActivityViewModel implements
     public void onDataChanged(List<TweetModel> tweetModels, boolean isLastpage)
     {
         mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.setRecyclerViewData(tweetModels, isLastpage);
-        if(mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.isLoading())
-            mTweetsSwipeRefreshLayoutViewModelField.tweetsSwipeRefreshViewModel.hideLoader();
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.isLoading())
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.hideLoader();
+    }
+
+    @Override
+    public void onClearData()
+    {
+        mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.setRecyclerViewData(new ArrayList<TweetModel>(), false);
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.isLoading())
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.hideLoader();
+    }
+
+    @Override
+    public void onFailure()
+    {
+        mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.onLoadDataFailed();
+        if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.isLoading())
+            mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.hideLoader();
     }
 
     /**********  RecyclerViewModel (VM) callbacks *******/
@@ -182,7 +234,7 @@ public class TweetsSearchActivityViewModel implements
 
     /**********  SwipeRefreshLayoutViewModel (VM) callbacks *******/
     @Override
-    public void onSwipeRefresh()
+    public void onRefresh()
     {
         mTweetsSearchViewModelField.tweetsSearchViewModel.reloadTweets();
     }
@@ -202,6 +254,7 @@ public class TweetsSearchActivityViewModel implements
         @Inject public DrawerLayout drawerLayout;
         @Inject public ProgressBar progressBar;
         @Inject public TweetsRecyclerView tweetsRecyclerView;
+        @Inject public NavigationView navigationView;
     }
 
 

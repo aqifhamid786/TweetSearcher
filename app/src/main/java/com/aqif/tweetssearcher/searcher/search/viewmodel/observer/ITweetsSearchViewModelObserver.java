@@ -11,4 +11,6 @@ import java.util.List;
 public interface ITweetsSearchViewModelObserver
 {
     void onDataChanged(List<TweetModel> tweetModels, boolean isLastPage);
+    void onClearData();
+    void onFailure();
 }

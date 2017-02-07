@@ -49,6 +49,13 @@ public class TweetsRecyclerViewModel implements
     }
 
     @Override
+    public  void onLoadDataFailed()
+    {
+        mRecyclerViewAdapter.setLoadingMoreItem(false);
+        mRecyclerViewScrollToEndObserver.setLoadingData(mIsLastPageLoaded);
+    }
+
+    @Override
     public void setRecyclerViewData(List<TweetModel> data, boolean isLastPage)
     {
         updateTweetsListner(data);

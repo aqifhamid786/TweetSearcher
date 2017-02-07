@@ -75,6 +75,7 @@ public class TweetsSearchViewModel implements
     public void ShowErrorMessage(String error)
     {
         mProgressBar.setVisibility(View.INVISIBLE);
+        mTweetsDataChangeObservable.notifyFailure();
         // TODO: Show notification.
     }
 
@@ -93,10 +94,12 @@ public class TweetsSearchViewModel implements
         {
             mSearchViewEditText.setText(mCurrentQuery.trim());
         }
-
-        mTweetsDataChangeObservable.notifyDataChanged(new ArrayList<TweetModel>(), false);
         mProgressBar.setVisibility(View.VISIBLE);
+
+
+        mTweetsDataChangeObservable.notifyClearData();
         mTweetsSearchModel.searchTweets(hashtag);
+
     }
 
     @Override
@@ -105,7 +108,7 @@ public class TweetsSearchViewModel implements
         if(mIsInitialized && mCurrentQuery!=null && mCurrentQuery.length()>0)
             mTweetsSearchModel.searchTweets(mCurrentQuery);
         else
-            mTweetsDataChangeObservable.notifyDataChanged(new ArrayList<TweetModel>(), false);
+            mTweetsDataChangeObservable.notifyFailure();
     }
 
     @Override

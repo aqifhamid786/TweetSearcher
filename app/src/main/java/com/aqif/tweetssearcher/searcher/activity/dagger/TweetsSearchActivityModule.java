@@ -4,22 +4,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
 
 import com.aqif.tweetssearcher.R;
 import com.aqif.tweetssearcher.searcher.activity.ITweetsSearchActivityViewModel;
 import com.aqif.tweetssearcher.searcher.activity.TweetsSearchActivityViewModel;
-import com.aqif.tweetssearcher.searcher.activity.observer.ITweetsSearchActivityObservable;
-import com.aqif.tweetssearcher.searcher.activity.observer.ITweetsSearchActivityObserver;
-import com.aqif.tweetssearcher.searcher.activity.observer.TweetsSearchActivityObservable;
 import com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
-import com.aqif.tweetssearcher.searcher.swiperefresh.viewmodel.TweetsSwipeRefreshViewModel;
-
-import java.util.ArrayList;
+import com.aqif.tweetssearcher.searcher.refresh.viewmodel.TweetsRefreshViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -81,19 +75,13 @@ public class TweetsSearchActivityModule
     }
 
     @Provides
-    ITweetsSearchActivityObservable provideTweetsSearchActivityObservable()
-    {
-        return new TweetsSearchActivityObservable(new ArrayList<ITweetsSearchActivityObserver>());
-    }
-
-    @Provides
     ITweetsSearchActivityViewModel provideTweetsSearchActivityViewModel()
     {
         return new TweetsSearchActivityViewModel(
                 new TweetsSearchActivityViewModel.InjectableActivityFields(),
                 new TweetsRecyclerViewModel.InjectableTweetsRecyclerViewModelField(),
                 new TweetsSearchViewModel.InjectableTweetsSearchViewModelField(),
-                new TweetsSwipeRefreshViewModel.InjectableTweetsSwipeRefreshLayoutViewModelField());
+                new TweetsRefreshViewModel.InjectableTweetsRefreshLayoutViewModelField());
     }
 
 

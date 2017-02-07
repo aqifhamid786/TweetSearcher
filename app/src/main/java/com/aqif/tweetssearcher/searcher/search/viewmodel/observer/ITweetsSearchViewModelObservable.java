@@ -12,5 +12,8 @@ public interface ITweetsSearchViewModelObservable
 {
     void registerTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver tweetsSearchViewModelObserver);
     void unregisterTweetsSearchViewModelObserver(ITweetsSearchViewModelObserver tweetsSearchViewModelObserver);
+
     void notifyDataChanged(List<TweetModel> tweetModels, boolean isLastPage);
+    void notifyClearData();
+    void notifyFailure();
 }

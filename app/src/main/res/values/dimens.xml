@@ -1,0 +1,30 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">4dp</dimen>
+    <dimen name="activity_vertical_margin">4dp</dimen>
+
+    <dimen name="zero">0dp</dimen>
+
+    <dimen name="card_layout_margin">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_corner_radius">0dp</dimen>
+
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">80dp</dimen>
+    <dimen name="nav_header_title_text_size">20dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+
+    <dimen name="tweet_card_view_text_padding">16dp</dimen>
+    <dimen name="tweet_card_view_ic_padding">8dp</dimen>
+    <dimen name="tweet_card_ic_content_padding">32dp</dimen>
+    <dimen name="tweet_card_view_ic_size">22dp</dimen>
+
+    <dimen name="card_view_action_padding">8dp</dimen>
+    <dimen name="card_view_action_left_padding">8dp</dimen>
+
+    <dimen name="card_view_large_text_size">16sp</dimen>
+    <dimen name="card_view_medium_text_size">16sp</dimen>
+
+    <dimen name="card_view_separator_height">1dp</dimen>
+</resources>

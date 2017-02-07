@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/no_refresh"
+            android:title="No Refresh" />
+        <item
+            android:id="@+id/two_seconds"
+            android:title="2 Seconds"
+            android:checked="true"/>
+        <item
+            android:id="@+id/five_seconds"
+            android:title="5 Seconds" />
+        <item
+            android:id="@+id/thirty_seconds"
+            android:title="30 Seconds" />
+        <item
+            android:id="@+id/one_minute"
+            android:title="1 Minute" />
+    </group>
+
+</menu>

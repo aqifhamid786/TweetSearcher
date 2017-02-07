@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.aqif.tweetssearcher.searcher.activity.ITweetsSearchActivityViewModel;
 import com.aqif.tweetssearcher.searcher.activity.TweetsSearchActivity;
@@ -33,6 +34,7 @@ public interface TweetsSearchActivityComponent
     Toolbar getToolbar();
     ProgressBar getProgressBar();
     NavigationView getNavigationView();
+    TextView getTextView();
 
     ITweetsSearchActivityViewModel getTweetsSearchActivityViewModel();
 

@@ -5,12 +5,6 @@ import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.aqif.tweetssearcher.R;
-import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.Hashtag;
-import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.UserMention;
-
-import java.util.List;
-
 /**
  * Created by aqifhamid on 2/7/17.
  */

@@ -82,6 +82,20 @@ public class TweetsRecyclerViewModel implements
     }
 
     @Override
+    public void onActivityDestroyCalled()
+    {
+        if(mTweetsData!=null)
+        {
+            for(int lop=0; lop<mTweetsData.size(); lop++)
+            {
+                mTweetsData.get(lop).setOnTweetModelSpannableClicked(null);
+            }
+
+        }
+        mRecyclerViewAdapter.updateData(new ArrayList<TweetModel>());
+    }
+
+    @Override
     public void onLoadMoreRecycleViewDataListner(int page, int totalItemsCount, RecyclerView view)
     {
 
@@ -105,6 +119,8 @@ public class TweetsRecyclerViewModel implements
     {
         return mTweetsRecyclerViewModelObservable;
     }
+
+
 
     @Override
     public void onTweetModelSpannableClicked(String hashtag)

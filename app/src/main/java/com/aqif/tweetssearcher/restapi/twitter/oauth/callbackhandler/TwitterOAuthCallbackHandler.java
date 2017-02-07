@@ -62,7 +62,7 @@ public class TwitterOAuthCallbackHandler implements ITwitterOAuthCallbackHandler
             // We received response from server. But there is some internal server error.
             for(int lop = 0; lop< mTwitterOAuthCallbackObservers.size(); lop++)
             {
-                mTwitterOAuthCallbackObservers.get(lop).onTwitterOAuthFailed(TwitterConstants.TwiiterOAuthFailMessage);
+                mTwitterOAuthCallbackObservers.get(lop).onTwitterOAuthFailed(TwitterConstants.TwitterOAuthFailMessage);
             }
         }
 
@@ -74,7 +74,7 @@ public class TwitterOAuthCallbackHandler implements ITwitterOAuthCallbackHandler
         mCurrentCall = null;
         for(int lop = 0; lop< mTwitterOAuthCallbackObservers.size(); lop++)
         {
-            mTwitterOAuthCallbackObservers.get(lop).onTwitterOAuthFailed(TwitterConstants.TwiiterOAuthFailMessage);
+            mTwitterOAuthCallbackObservers.get(lop).onTwitterOAuthFailed(TwitterConstants.TwitterOAuthFailMessage);
         }
     }
 

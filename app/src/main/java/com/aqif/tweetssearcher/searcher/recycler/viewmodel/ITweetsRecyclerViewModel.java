@@ -15,5 +15,6 @@ public interface ITweetsRecyclerViewModel
     void setRecyclerViewData(List<TweetModel> data, boolean isLastPage);
     void onLoadDataFailed();
     ITweetsRecyclerViewModelObservable getTweetsRecyclerViewModelObserver();
+    void onActivityDestroyCalled();
 
 }

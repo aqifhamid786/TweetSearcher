@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.aqif.tweetssearcher.R;
 import com.aqif.tweetssearcher.searcher.activity.ITweetsSearchActivityViewModel;
@@ -14,6 +15,7 @@ import com.aqif.tweetssearcher.searcher.recycler.view.TweetsRecyclerView;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.TweetsRecyclerViewModel;
 import com.aqif.tweetssearcher.searcher.search.viewmodel.TweetsSearchViewModel;
 import com.aqif.tweetssearcher.searcher.refresh.viewmodel.TweetsRefreshViewModel;
+
 
 import dagger.Module;
 import dagger.Provides;
@@ -75,6 +77,12 @@ public class TweetsSearchActivityModule
     }
 
     @Provides
+    TextView provideTextView()
+    {
+        return (TextView) mActivity.findViewById(R.id.empty_list_message);
+    }
+
+    @Provides
     ITweetsSearchActivityViewModel provideTweetsSearchActivityViewModel()
     {
         return new TweetsSearchActivityViewModel(
@@ -83,9 +91,6 @@ public class TweetsSearchActivityModule
                 new TweetsSearchViewModel.InjectableTweetsSearchViewModelField(),
                 new TweetsRefreshViewModel.InjectableTweetsRefreshLayoutViewModelField());
     }
-
-
-
 
 
 }

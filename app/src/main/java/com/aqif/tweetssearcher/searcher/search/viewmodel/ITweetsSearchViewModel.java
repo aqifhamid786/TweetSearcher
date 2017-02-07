@@ -12,5 +12,6 @@ public interface ITweetsSearchViewModel
     void searchTweets(String hashtag);
     void reloadTweets();
     void loadMoreTweets();
+    void onActivityDestroyCalled();
 
 }

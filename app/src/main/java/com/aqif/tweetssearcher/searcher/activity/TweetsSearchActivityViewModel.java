@@ -10,7 +10,9 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.aqif.tweetssearcher.R;
 
@@ -171,11 +173,13 @@ public class TweetsSearchActivityViewModel implements
         if(mTweetsSearchViewModelField.tweetsSearchViewModel!=null)
         {
             mTweetsSearchViewModelField.tweetsSearchViewModel.getTweetsSearchViewModelObservable().unregisterTweetsSearchViewModelObserver(this);
+            mTweetsSearchViewModelField.tweetsSearchViewModel.onActivityDestroyCalled();
         }
 
         if(mTweetsRecyclerViewModelField.tweetsRecyclerViewModel!=null)
         {
             mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.getTweetsRecyclerViewModelObserver().unregisterRecyclerViewModelObserver(this);
+            mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.onActivityDestroyCalled();
         }
     }
 
@@ -200,6 +204,7 @@ public class TweetsSearchActivityViewModel implements
         mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.setRecyclerViewData(tweetModels, isLastpage);
         if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.isLoading())
             mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.hideLoader();
+        mActivityFields.textView.setVisibility(tweetModels.size()>0? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
@@ -208,6 +213,7 @@ public class TweetsSearchActivityViewModel implements
         mTweetsRecyclerViewModelField.tweetsRecyclerViewModel.setRecyclerViewData(new ArrayList<TweetModel>(), false);
         if(mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.isLoading())
             mTweetsRefreshLayoutViewModelField.tweetsRefreshViewModel.hideLoader();
+        mActivityFields.textView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -239,12 +245,12 @@ public class TweetsSearchActivityViewModel implements
         mTweetsSearchViewModelField.tweetsSearchViewModel.reloadTweets();
     }
 
+
     /** Injectable Fields Composer
      *
      * We cannot inject private fields. Composing them into an object so that we can hide and inject it as well.
      *
      * */
-
 
     public static class InjectableActivityFields
     {
@@ -255,8 +261,7 @@ public class TweetsSearchActivityViewModel implements
         @Inject public ProgressBar progressBar;
         @Inject public TweetsRecyclerView tweetsRecyclerView;
         @Inject public NavigationView navigationView;
+        @Inject public TextView textView;
     }
-
-
 
 }

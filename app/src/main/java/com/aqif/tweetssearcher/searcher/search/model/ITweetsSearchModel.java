@@ -12,6 +12,7 @@ public interface ITweetsSearchModel
 {
     boolean searchTweets(String hashtag);
     boolean loadMoreTweets();
+    void clear();
 
     void setTweetsSearchModelListener(ITweetsSearchModelListener tweetsSearchModelListener);
 

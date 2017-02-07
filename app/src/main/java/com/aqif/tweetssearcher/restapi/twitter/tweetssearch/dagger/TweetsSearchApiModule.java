@@ -9,7 +9,6 @@ import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.requesthandler.ITwee
 import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.requesthandler.TweetsSearchRequestHandler;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;

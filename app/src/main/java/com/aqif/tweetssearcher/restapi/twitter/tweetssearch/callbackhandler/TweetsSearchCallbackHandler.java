@@ -62,7 +62,7 @@ public class TweetsSearchCallbackHandler implements ITweetsSearchCallbackHandler
         {
             for(int lop = 0; lop< mTweetsSearchCallbackObservers.size(); lop++)
             {
-                mTweetsSearchCallbackObservers.get(lop).onTweetsSearchFailed(TwitterConstants.TwiiterOAuthFailMessage);
+                mTweetsSearchCallbackObservers.get(lop).onTweetsSearchFailed(TwitterConstants.TwitterOAuthFailMessage);
             }
         }
     }
@@ -74,7 +74,7 @@ public class TweetsSearchCallbackHandler implements ITweetsSearchCallbackHandler
         mSearchCall = null;
         for(int lop = 0; lop< mTweetsSearchCallbackObservers.size(); lop++)
         {
-            mTweetsSearchCallbackObservers.get(lop).onTweetsSearchFailed(TwitterConstants.TwiiterOAuthFailMessage);
+            mTweetsSearchCallbackObservers.get(lop).onTweetsSearchFailed(TwitterConstants.TwitterOAuthFailMessage);
         }
     }
 

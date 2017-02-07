@@ -1,7 +1,6 @@
 package com.aqif.tweetssearcher.searcher.recycler.model;
 
 import android.graphics.Color;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -11,8 +10,6 @@ import android.view.View;
 
 import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.Hashtag;
 import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.UserMention;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 

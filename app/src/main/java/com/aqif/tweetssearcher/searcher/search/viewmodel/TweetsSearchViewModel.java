@@ -118,6 +118,12 @@ public class TweetsSearchViewModel implements
     }
 
     @Override
+    public void onActivityDestroyCalled()
+    {
+        mTweetsSearchModel.clear();
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query)
     {
         if(query!=null && query.trim().length()>0)

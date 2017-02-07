@@ -6,4 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="no_tweets_message">Seems like we are out of tweets. Try searching #tags or wait for the magic!</string>
+
 </resources>

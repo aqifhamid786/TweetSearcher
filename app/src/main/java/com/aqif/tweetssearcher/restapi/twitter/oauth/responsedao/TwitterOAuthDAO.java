@@ -1,7 +1,6 @@
 
 package com.aqif.tweetssearcher.restapi.twitter.oauth.responsedao;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -133,4 +133,10 @@ public class TweetsSearchModel implements
         return true;
     }
 
+    @Override
+    public void clear()
+    {
+        mTwitterApiManager.clear();
+    }
+
 }

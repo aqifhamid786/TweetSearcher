@@ -8,11 +8,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
-import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.Hashtag;
-import com.aqif.tweetssearcher.restapi.twitter.tweetssearch.responsedao.UserMention;
-
-import java.util.List;
-
 /**
  * Created by aqifhamid on 2/5/17.
  */
@@ -27,8 +22,6 @@ public class TweetModel
     private int mFavouritiesCount;
     private IOnTweetModelSpannableClicked mOnTweetModelSpannableClicked;
 
-    private List<Hashtag> hashtags = null;
-    private List<UserMention> userMentions = null;
 
     public TweetModel(String name, String userName, String tweetText, int reTweetCount, int favouritiesCount)
     {
@@ -59,72 +52,93 @@ public class TweetModel
         return mFavouritiesCount;
     }
 
-    public List<Hashtag> getHashtags()
-    {
-        return hashtags;
-    }
-
-    public void setHashtags(List<Hashtag> hashtags)
-    {
-        this.hashtags = hashtags;
-    }
-
-    public List<UserMention> getUserMentions()
-    {
-        return userMentions;
-    }
-
-    public void setUserMentions(List<UserMention> userMentions)
-    {
-        this.userMentions = userMentions;
-    }
-
     public String getTweetText()
     {
         return mTweetText;
     }
 
-    // TODO: Add Factory for spannables.
+/** Highlights and converts tags into clickable items. */
     public SpannableString getSpannableTweetText()
     {
 
         SpannableString spanableString = new SpannableString(mTweetText);
 
-        for(int lop=0; lop<userMentions.size(); lop++)
-        {
-            int startIndex = userMentions.get(lop).getIndices().get(0);
-            int endIndex   = userMentions.get(lop).getIndices().get(1);
-            spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        }
+        int HASHTAG = 0;
+        int MENTION = 1;
+        int start = -1;
+        int type = -1;
 
-        for(int lop=0; lop<hashtags.size(); lop++)
+
+        for(int lop=0; lop<mTweetText.length(); lop++)
         {
-            final Hashtag hashtag = hashtags.get(lop);
-            int startIndex = hashtag.getIndices().get(0);
-            int endIndex   = hashtag.getIndices().get(1);
-            spanableString.setSpan(new ClickableSpan()
+            if(mTweetText.charAt(lop)=='#')
             {
-                @Override
-                public void onClick(View view)
-                {
-                    mOnTweetModelSpannableClicked.onTweetModelSpannableClicked(hashtag.getText());
-                }
-            }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                processHashtagOrMention(spanableString, type, HASHTAG, MENTION, start, lop);
+                start = lop;
+                type = HASHTAG;
+            }
+            else if(mTweetText.charAt(lop)=='@')
+            {
+                processHashtagOrMention(spanableString, type, HASHTAG, MENTION, start, lop);
+                start = lop;
+                type = MENTION;
+            }
+            else if(mTweetText.charAt(lop)==' ' || lop == mTweetText.length()-1)
+            {
+                int end = lop+1;
+                if(mTweetText.charAt(lop)==' ')
+                    end = lop;
+
+                processHashtagOrMention(spanableString, type, HASHTAG, MENTION, start, end);
+
+                type = -1;
+                start = -1;
+            }
         }
 
         return spanableString;
 
     }
 
+    private void processHashtagOrMention(SpannableString spanableString, int type, int HASHTAG, int MENTION, int start, int end)
+    {
+        if(type==HASHTAG)
+        {
+            processHashtags(spanableString, start, end);
+        }
+        else if(type==MENTION)
+        {
+            processMention(spanableString, start, end);
+        }
+    }
 
+    private void processHashtags(SpannableString spanableString, int start, int end)
+    {
+        final String subStr = mTweetText.substring(start+1, end);
+        spanableString.setSpan(new ClickableSpan()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                mOnTweetModelSpannableClicked.onTweetModelSpannableClicked(subStr);
+            }
+        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    private void processMention(SpannableString spanableString, int start, int end)
+    {
+        spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+/** listner */
     public void setOnTweetModelSpannableClicked(IOnTweetModelSpannableClicked onTweetModelSpannableClicked)
     {
         mOnTweetModelSpannableClicked = onTweetModelSpannableClicked;
     }
 
-    /**** Click listner for spannable *****/
+/** Click listner for spannable */
 
     public interface IOnTweetModelSpannableClicked
     {

@@ -1,6 +1,7 @@
 package com.aqif.tweetssearcher.searcher.recycler.viewmodel;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.adapter.TweetsRecyclerAdapter;
 import com.aqif.tweetssearcher.searcher.recycler.viewmodel.observer.ITweetsRecyclerViewModelObservable;
@@ -37,6 +38,8 @@ public class TweetsRecyclerViewModel implements
                                    RecyclerViewScrollToEndObserver recyclerViewScrollToEndObserver)
     {
         mRecyclerView = recyclerView;
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
         mRecyclerViewAdapter = recyclerViewAdapter;
         mTweetsRecyclerViewModelObservable = tweetsRecyclerViewModelObservable;
 
@@ -62,6 +65,7 @@ public class TweetsRecyclerViewModel implements
         mIsLastPageLoaded = isLastPage;
         mRecyclerViewAdapter.setLoadingMoreItem(false);
         mRecyclerViewAdapter.updateData(data);
+
         mRecyclerViewScrollToEndObserver.setLoadingData(mIsLastPageLoaded);
     }
 

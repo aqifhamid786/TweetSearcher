@@ -32,6 +32,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
     {
         mContext = context;
         mTweetModels = new ArrayList<>();
+
     }
 
     @Override
@@ -99,8 +100,7 @@ public class TweetsRecyclerAdapter extends RecyclerView.Adapter<TweetViewHolder>
         for(int lop=0; lop<mTweetModels.size() && lop<tweetModels.size(); lop++)
         {
             mTweetModels.set(lop, tweetModels.get(lop));
-            if(!mTweetModels.get(lop).getTweetText().equals(tweetModels.get(lop).getTweetText()))
-                notifyItemChanged(lop);
+            notifyItemChanged(lop);
         }
 
         while(mTweetModels.size()<tweetModels.size())

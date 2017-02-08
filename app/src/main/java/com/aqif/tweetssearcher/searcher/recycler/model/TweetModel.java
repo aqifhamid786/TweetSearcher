@@ -96,6 +96,7 @@ public class TweetModel
                 start = -1;
             }
         }
+        processHashtagOrMention(spanableString, type, HASHTAG, MENTION, start, mTweetText.length());
 
         return spanableString;
 
@@ -116,14 +117,18 @@ public class TweetModel
     private void processHashtags(SpannableString spanableString, int start, int end)
     {
         final String subStr = mTweetText.substring(start+1, end);
-        spanableString.setSpan(new ClickableSpan()
+
+        if(subStr.length()>0)
         {
-            @Override
-            public void onClick(View view)
+            spanableString.setSpan(new ClickableSpan()
             {
-                mOnTweetModelSpannableClicked.onTweetModelSpannableClicked(subStr);
-            }
-        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                @Override
+                public void onClick(View view)
+                {
+                    mOnTweetModelSpannableClicked.onTweetModelSpannableClicked(subStr);
+                }
+            }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         spanableString.setSpan(new ForegroundColorSpan(Color.parseColor("#5baaf4")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 

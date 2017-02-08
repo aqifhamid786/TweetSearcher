@@ -105,6 +105,7 @@ public class TweetsSearchViewModel implements
     @Override
     public void reloadTweets()
     {
+
         if(mIsInitialized && mCurrentQuery!=null && mCurrentQuery.length()>0)
             mTweetsSearchModel.searchTweets(mCurrentQuery);
         else
